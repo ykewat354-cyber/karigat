@@ -4,6 +4,8 @@ An open-source, Termux-first coding harness. Status: release candidate. See [ver
 
 ## How Karigat works
 
+Experimental `--team` delegates files to parallel workers. See the [20-family research review](docs/agent-research.md) and [design and live trial](docs/team-trial.md) before choosing it over a single builder.
+
 `prompt → selected context → plan + frozen checks → generate → verify → repair once → report`
 
 The model proposes files. Karigat writes them to a candidate folder or detached Git worktree and checks the result locally. You decide whether to apply a project patch. Inference is hosted; the phone runs the harness and its checks.

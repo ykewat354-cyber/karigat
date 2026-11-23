@@ -44,6 +44,7 @@ def main(argv=None):
     run.add_argument('--verify',action='append',default=[],metavar='COMMAND',help='Run this command on trusted baseline and generated candidates (shell disabled)')
     run.add_argument('--share-check-feedback',action='store_true',help='Include bounded FAIL: lines from approved verifier output in hosted repair requests')
     run.add_argument('--pack',choices=['general','change','create'])
+    run.add_argument('--team',action='store_true',help='Delegate initial build to a coordinator and up to two parallel file owners')
     run.add_argument('--fallback',action='append',choices=ROUTES,default=[],help='Allow this additional hosted route for this task')
     sub.add_parser('runs'); sub.add_parser('report').add_argument('id');sub.add_parser('resume').add_argument('id')
     run.add_argument('--planner',choices=ROUTES); run.add_argument('--context',type=Path,action='append',default=[],help='Text file to send to the selected cloud providers')
@@ -119,6 +120,7 @@ def main(argv=None):
         if args.journey and (not isinstance(steps,list) or not 1<=len(steps)<=40 or any(not isinstance(s,dict) or s.get('op') not in ('first-screen','fill','click','text','reload','checked','painted','turntable') for s in steps)):raise ValueError('Invalid browser journey')
         row['checkpoint']=dict(prompt=prompt,brief=supplied,cwd=str(Path.cwd()),routes=routes,frozen=frozen,attempt=0,original_pages=[],browser=args.browser or bool(steps),steps=steps)
         row['checkpoint']['commands']=commands
+        row['checkpoint']['team']=args.team
         row['checkpoint']['share_feedback']=args.share_check_feedback
         with journal.lease(row['id']):journal.store(row);return drive(journal,row)
     except (OSError,ValueError,EOFError) as e:
@@ -135,7 +137,10 @@ def drive(journal,row):
             for candidate in routes:
                 if ready: candidate=ready['provider'];break
                 try:
-                    raw = ask(candidate,prompt).strip()
+                    if cp.get('team') and attempt==0:
+                        from .team import build
+                        raw,row['team_plan']=build(candidate,prompt,ask)
+                    else:raw = ask(candidate,prompt).strip()
                     if raw.startswith('```') and raw.endswith('```'): raw = '\n'.join(raw.splitlines()[1:-1])
                     data=json.loads(raw)
                     if not isinstance(data,dict) or not isinstance(data.get('summary'),str): raise ValueError('Invalid deliverable response.')
