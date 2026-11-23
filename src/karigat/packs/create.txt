@@ -1,0 +1,1 @@
+Start with a complete end-to-end path. Include all local files needed for the deliverable, meaningful error states and a reproducible way to use it. Choose a format appropriate to the user's request.

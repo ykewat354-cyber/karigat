@@ -1,0 +1,1 @@
+Produce the smallest complete deliverable that meets the brief. Prefer existing project conventions. Distinguish supplied facts from assumptions. Include concrete use or setup instructions when needed. Do not claim checks were executed; the harness records execution separately.

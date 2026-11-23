@@ -1,0 +1,11 @@
+[
+  {"op":"first-screen","selector":"#expenseForm button[type=submit]"},
+  {"op":"fill","selector":"#description","value":"Gym day pass"},
+  {"op":"fill","selector":"#amount","value":"250"},
+  {"op":"fill","selector":"#date","value":"2026-11-22"},
+  {"op":"click","selector":"#expenseForm button[type=submit]"},
+  {"op":"text","selector":"#totalExpenses","value":"250.00"},
+  {"op":"reload"},
+  {"op":"text","selector":"#expenseTableBody","value":"Gym day pass"},
+  {"op":"text","selector":"#totalExpenses","value":"250.00"}
+]

@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "karigat"
+version = "0.2.1rc3"
+requires-python = ">=3.11"
+description = "A cloud-only, task-agnostic Termux harness"
+
+[project.scripts]
+karigat = "karigat.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+karigat = ["browser.mjs", "packs/*.txt"]

@@ -1,0 +1,10 @@
+[
+  {"op":"first-screen","selector":"input[type=text],input:not([type])"},
+  {"op":"fill","selector":"input[type=text],input:not([type])","value":"Evening walk"},
+  {"op":"click","selector":"form button[type=submit],form button:not([type]),button[id*=add i],button[class*=add i]"},
+  {"op":"text","selector":"body","value":"Evening walk"},
+  {"op":"click","selector":"input[type=checkbox],[role=checkbox],button[aria-pressed=false]"},
+  {"op":"reload"},
+  {"op":"text","selector":"body","value":"Evening walk"},
+  {"op":"checked","selector":"input[type=checkbox],[role=checkbox],button[aria-pressed]"}
+]

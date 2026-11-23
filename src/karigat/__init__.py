@@ -1,0 +1,1 @@
+"""Karigat cloud harness."""
