@@ -2,7 +2,20 @@
 
 An open-source, Termux-first coding harness. Status: release candidate. See [verified milestones and remaining work](ROADMAP.md). Requires Python 3.11+ and Git. From a clone, install with `python -m pip install .`.
 
-Cloud-only Termux CLI for open-ended tasks. The first build accepts a prompt and optional reference files, can ask a second hosted provider to plan, and generates a response and text artifacts. Run `karigat` anywhere to start. No model downloads, local daemon, LAN backend, or local inference fallback.
+## How Karigat works
+
+`prompt → selected context → plan + frozen checks → generate → verify → repair once → report`
+
+The model proposes files. Karigat writes them to a candidate folder or detached Git worktree and checks the result locally. You decide whether to apply a project patch. Inference is hosted; the phone runs the harness and its checks.
+
+| Start here | What you'll find |
+| --- | --- |
+| [Agent workflow](docs/workflow.md) | Run diagram, ownership of each step, failure paths and a worked example |
+| [Implementation](src/karigat/) · [prompt packs](src/karigat/packs/) | CLI orchestration, provider calls, workspace and verifier code |
+| [Offline tests](tests/) · [calibration cases](evals/) | Harness regressions versus checks run against generated artifacts |
+| [Contributing](CONTRIBUTING.md) · [roadmap](ROADMAP.md) | How to change the harness and which milestones still need evidence |
+
+## Quick start
 
 Install with `python -m pip install -e ~/karigat`. Run `karigat providers` to check which credentials are present (this does not test connectivity). Set just the API key you want in your own terminal: `OPENROUTER_API_KEY`, `GEMINI_API_KEY`, or `OLLAMA_API_KEY`. OpenRouter uses its free router. For Gemini and Ollama Cloud verify your account has billing disabled / is on a free-only plan, then set `export KARIGAT_FREE_ACCOUNT=1`. The CLI cannot verify your account's billing settings itself.
 
